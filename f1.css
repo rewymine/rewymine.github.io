@@ -1,0 +1,118 @@
+/* Custom CSS styles */
+/* Add your custom styles here */
+
+/* Hiệu ứng hover cho nút */
+.btn:hover {
+    transform: scale(1.1);
+}
+
+/* Hiệu ứng độ mờ khi di chuột vào ảnh */
+.img-fluid:hover {
+    opacity: 0.8;
+}
+
+/* Hiệu ứng đổi màu chữ khi di chuột vào liên kết */
+.nav-link:hover {
+    color: #5347ff; /* Đổi màu thành màu đỏ */
+}
+
+/* Hiệu ứng biến mất dần khi cuộn chuột xuống */
+.fade-out {
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.fade-out:hover {
+    opacity: 0.5;
+}
+
+/* Hiệu ứng lật ảnh */
+.flip-card {
+  perspective: 1000px; /* Tạo hiệu ứng 3D */
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg); /* Lật ảnh */
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden; /* Ẩn phía sau của thẻ */
+}
+
+/* Hiệu ứng di chuyển lên khi hiển thị */
+@keyframes moveUp {
+    0% {
+        transform: translateY(100px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.move-up {
+    animation: moveUp 0.5s ease-out;
+}
+
+/* Custom CSS styles */
+/* Add your custom styles here */
+
+/* Hiệu ứng hover cho các liên kết */
+.navbar-nav .nav-link {
+    transition: color 0.3s ease-in-out;
+}
+.navbar-nav .nav-link:hover {
+    color: #ff6600;
+}
+
+/* Hiệu ứng hover cho nút */
+.btn {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+.btn:hover {
+    background-color: #ff6600;
+    color: #fff;
+}
+
+/* Hiệu ứng fade-in cho phần nội dung */
+.container {
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Hiệu ứng slide-up cho footer */
+.footer {
+    opacity: 0;
+    animation: slideUp 1s forwards;
+}
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
