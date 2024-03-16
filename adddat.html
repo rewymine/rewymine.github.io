@@ -7,6 +7,22 @@
 <style>
   body {
     font-family: Arial, sans-serif;
+    background-color: #1a1a1a;
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+  #container {
+    background-color: #262626;
+    padding: 20px;
+    border-radius: 5px;
+    margin: 20px auto;
+    max-width: 600px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+  h2 {
+    color: #fff;
+    text-align: center;
   }
   form {
     margin-bottom: 20px;
@@ -14,15 +30,49 @@
   label {
     display: block;
     margin-bottom: 5px;
+    color: #ccc;
   }
   input {
     margin-bottom: 10px;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 5px;
+    border-radius: 3px;
   }
-  #result {
-    margin-top: 20px;
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
   .button-group {
     margin-bottom: 10px;
+  }
+  .button-group button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  .button-group button:hover {
+    background-color: #023c79;
+  }
+  button[type="submit"] {
+    background-color: #392e75;
+    color: #fff;
+  }
+  button[type="submit"]:hover {
+    background-color: #2f3791;
+  }
+  #result {
+    margin-top: 20px;
+    color: #ccc;
   }
 </style>
 </head>
