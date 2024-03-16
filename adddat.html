@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thêm ngày vào ngày</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  form {
+    margin-bottom: 20px;
+  }
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  input {
+    margin-bottom: 10px;
+  }
+  #result {
+    margin-top: 20px;
+  }
+  .button-group {
+    margin-bottom: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div id="container">
+  <h2>Thêm ngày vào ngày</h2>
+  <form id="dateForm">
+    <label for="currentDate">Ngày hiện tại (ddmmyyyy):</label>
+    <input type="date" id="currentDate">
+    <button type="button" onclick="setToday()">Ngày hiện tại</button>
+    <label for="numberOfDays">Số ngày cần thêm:</label>
+    <input type="number" id="numberOfDays" value="1" required>
+    <div class="button-group">
+      <button type="button" onclick="decrementDays()">Trừ</button>
+      <button type="button" onclick="incrementDays()">Cộng</button>
+    </div>
+    <button type="submit">Tính Ngày</button>
+  </form>
+  <div id="result"></div>
+</div>
+
+<script>
+function setToday() {
+  var today = new Date();
+  var day = String(today.getDate()).padStart(2, '0');
+  var month = String(today.getMonth() + 1).padStart(2, '0'); // Tháng tính từ 0 đến 11
+  var year = today.getFullYear();
+  document.getElementById("currentDate").value = year + '-' + month + '-' + day;
+}
+
+function incrementDays() {
+  var numberOfDaysInput = document.getElementById("numberOfDays");
+  var currentValue = parseInt(numberOfDaysInput.value);
+  numberOfDaysInput.value = currentValue + 1;
+}
+
+function decrementDays() {
+  var numberOfDaysInput = document.getElementById("numberOfDays");
+  var currentValue = parseInt(numberOfDaysInput.value);
+  if (currentValue > 1) {
+    numberOfDaysInput.value = currentValue - 1;
+  }
+}
+
+document.getElementById("dateForm").addEventListener("submit", function(event) {
+  event.preventDefault();
+  addDays();
+});
+
+function addDays() {
+  var currentDateInput = document.getElementById("currentDate").value;
+  var currentDate = new Date(
+    parseInt(currentDateInput.substring(0, 4)),
+    parseInt(currentDateInput.substring(5, 7)) - 1,
+    parseInt(currentDateInput.substring(8, 10))
+  );
+  var numberOfDays = parseInt(document.getElementById("numberOfDays").value);
+  
+  if (isNaN(currentDate.getTime())) {
+    document.getElementById("result").innerHTML = "<strong>Lỗi:</strong> Định dạng ngày không hợp lệ.";
+    return;
+  }
+
+  var resultDate = new Date(currentDate);
+  resultDate.setDate(resultDate.getDate() + numberOfDays);
+
+  var resultText = "Ngày sau khi thêm " + numberOfDays + " ngày là: " + resultDate.toLocaleDateString('vi-VN', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  document.getElementById("result").innerHTML = "<strong>Kết quả:</strong> " + resultText;
+}
+</script>
+
+</body>
+</html>
