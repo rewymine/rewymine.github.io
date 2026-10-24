@@ -31,7 +31,8 @@ select{width:auto;max-width:100%}
 .chips button.on{color:var(--text);border-color:var(--acc)}
 .tag{display:inline-block;background:#0f0f14;border:1px solid var(--line);border-radius:8px;padding:2px 8px;margin:6px 6px 0 0;font-size:.8rem}
 small.foot{display:block;color:var(--mute);margin-top:24px;font-size:.78rem}
-iframe.v,#player iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:var(--r);margin-bottom:12px}#player audio{width:100%;margin-bottom:12px}
+iframe.v,#pbox iframe{width:100%;height:auto;aspect-ratio:16/9;border:0;border-radius:var(--r);margin-bottom:12px}#pbox audio{width:100%;margin-bottom:12px}
+[hidden]{display:none!important}.now .lnk{color:var(--acc)}.row .lk{padding:10px 8px}
 
 /* Phim */
 .poster{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;font-size:.85rem}
