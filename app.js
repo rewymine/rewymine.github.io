@@ -60,25 +60,73 @@ $('#imp').onchange = async e => {
   } catch { alert('File sao lưu không hợp lệ') }
 };
 
-/* ===== 3. NHẠC (YouTube nhúng chính thức / thẻ audio) ===== */
-let tracks = store.get('tracks', []);
+/* ===== 3. NHẠC (YouTube IFrame API + thẻ audio, tự phát bài kế tiếp) ===== */
+// Bài cũ lưu bằng link nhúng -> đổi sang dạng {vid} hoặc {list}
+const fixTrack = t => { if (t.kind !== 'yt' || t.vid || t.list) return t;
+  const l = ((t.url || '').match(/[?&]list=([\w-]+)/) || [])[1];
+  return l ? {...t, list: l} : {...t, vid: ((t.url || '').match(/embed\/([\w-]{11})/) || [])[1]} };
+let tracks = store.get('tracks', []).map(fixTrack).filter(t => t.kind !== 'yt' || t.vid || t.list);
 const ytId = u => (u.match(/(?:v=|youtu\.be\/|embed\/|shorts\/)([\w-]{11})/) || [])[1];
+const ytUrl = t => t.vid ? `https://www.youtube.com/watch?v=${t.vid}` : `https://www.youtube.com/playlist?list=${t.list}`;
+let cur = -1, yt = null, ytOk = false, pend = null, apiP = null;
+
 function drawMusic() {
-  $('#tl').innerHTML = tracks.map((t, i) => `<div class="row"><button class="lnk" data-p="${i}">▶ ${esc(t.title)}</button><button class="x" data-d="${i}" aria-label="Xoá">✕</button></div>`).join('') || '<p class="mute">Chưa có bài nào.</p>';
+  $('#tl').innerHTML = tracks.map((t, i) => `<div class="row${i === cur ? ' now' : ''}"><button class="lnk" data-p="${i}" style="flex:1">${i === cur ? '♪' : '▶'} ${esc(t.title)}</button>`
+    + (t.kind === 'audio' ? `<a class="x lk" href="${esc(t.url)}" download target="_blank" rel="noopener" aria-label="Tải về" title="Tải file về">⬇</a>`
+                          : `<a class="x lk" href="${ytUrl(t)}" target="_blank" rel="noopener" aria-label="Mở trên YouTube" title="Mở trên YouTube">↗</a>`)
+    + `<button class="x" data-d="${i}" aria-label="Xoá">✕</button></div>`).join('') || '<p class="mute">Chưa có bài nào.</p>';
 }
+const loadAPI = () => apiP || (apiP = new Promise(res => {
+  if (window.YT && YT.Player) return res();
+  window.onYouTubeIframeAPIReady = res;
+  const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api';
+  s.onerror = () => { apiP = null; alert('Không tải được trình phát YouTube. Kiểm tra mạng rồi thử lại.') };
+  document.head.appendChild(s);
+}));
+const startYT = t => t.vid ? yt.loadVideoById(t.vid) : yt.loadPlaylist({listType: 'playlist', list: t.list});
+
+async function play(i) {
+  const t = tracks[i]; if (!t) return;
+  cur = i; drawMusic(); $('#pctl').hidden = false; $('#pnow').textContent = t.title;
+  const au = $('#au');
+  if (t.kind === 'audio') {
+    if (ytOk) yt.pauseVideo(); const f = $('#ytp'); if (f) f.style.display = 'none';
+    au.hidden = false; au.src = t.url; au.play().catch(() => {}); return;
+  }
+  au.pause(); au.hidden = true;
+  await loadAPI();
+  const f = $('#ytp'); if (f) f.style.display = '';
+  if (!yt) { pend = t;
+    yt = new YT.Player('ytp', {width: '100%', playerVars: {playsinline: 1}, events: {
+      onReady: () => { ytOk = true; startYT(pend) },
+      onStateChange: e => { if (e.data === 0) onEnd() } }});
+  } else if (ytOk) startYT(t); else pend = t;
+}
+function onEnd() { // hết video: nếu là playlist thì chờ phát hết playlist rồi mới sang bài kế
+  const t = tracks[cur];
+  if (t && t.list && yt.getPlaylist) { const l = yt.getPlaylist() || []; if (yt.getPlaylistIndex() < l.length - 1) return }
+  next(1);
+}
+function next(d) {
+  if (!tracks.length) return; let n = cur + d;
+  if (n >= tracks.length || n < 0) { if (d > 0 && !$('#mloop').checked) return; n = (n + tracks.length) % tracks.length }
+  play(n);
+}
+$('#au').onended = () => next(1);
+$('#mprev').onclick = () => next(-1); $('#mnext').onclick = () => next(1);
+$('#mloop').checked = store.get('loop', false); $('#mloop').onchange = e => store.set('loop', e.target.checked);
+
 $('#tl').onclick = e => {
   const p = e.target.dataset.p, d = e.target.dataset.d;
-  if (p !== undefined) { const t = tracks[p];
-    $('#player').innerHTML = t.kind === 'audio' ? `<audio controls autoplay src="${esc(t.url)}"></audio>`
-      : `<iframe src="${esc(t.url)}" allow="autoplay; encrypted-media" allowfullscreen title="Trình phát"></iframe>`; }
-  if (d !== undefined) { tracks.splice(d, 1); store.set('tracks', tracks); drawMusic() }
+  if (p !== undefined) play(+p);
+  if (d !== undefined) { tracks.splice(d, 1); if (+d <= cur) cur--; store.set('tracks', tracks); drawMusic() }
 };
 $('#madd').onclick = async () => {
   const u = $('#mu').value.trim(); if (!u) return;
   const id = ytId(u), pl = (u.match(/[?&]list=([\w-]+)/) || [])[1]; let t;
-  if (id) { t = {kind: 'yt', title: 'Video ' + id, url: `https://www.youtube-nocookie.com/embed/${id}?autoplay=1`};
+  if (id) { t = {kind: 'yt', title: 'Video ' + id, vid: id};
     try { t.title = (await (await fetch('https://www.youtube.com/oembed?format=json&url=' + encodeURIComponent(u))).json()).title } catch {} }
-  else if (pl) t = {kind: 'yt', title: 'Playlist ' + pl.slice(0, 8), url: `https://www.youtube-nocookie.com/embed/videoseries?list=${pl}&autoplay=1`};
+  else if (pl) t = {kind: 'yt', title: 'Playlist ' + pl.slice(0, 8), list: pl};
   else if (/^https?:\/\/.+\.(mp3|m4a|ogg|wav)(\?|$)/i.test(u)) t = {kind: 'audio', title: decodeURIComponent(u.split('/').pop().split('?')[0]), url: u};
   else return alert('Link chưa hỗ trợ. Dùng link YouTube hoặc link trực tiếp tới file .mp3');
   tracks.push(t); store.set('tracks', tracks); $('#mu').value = ''; drawMusic();
