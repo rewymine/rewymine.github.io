@@ -25,8 +25,9 @@
 </section>
 
 <section class="tab" id="t-music">
-  <h1>Nhạc</h1><p class="sub">Nghe qua trình phát YouTube · dán link video hoặc playlist, hoặc link .mp3 hợp pháp</p>
-  <div id="player"></div>
+  <h1>Nhạc</h1><p class="sub">Nghe qua trình phát YouTube, tự phát bài kế tiếp · ⬇ tải file .mp3 · ↗ mở bài trên YouTube</p>
+  <div id="pbox"><div id="ytp"></div><audio id="au" controls hidden></audio></div>
+  <div class="bar" id="pctl" hidden><button class="b ghost" id="mprev">⏮ Trước</button><button class="b ghost" id="mnext">Sau ⏭</button><label class="td"><input type="checkbox" id="mloop"> Lặp danh sách</label><span class="mute" id="pnow" style="align-self:center"></span></div>
   <div class="bar"><input id="mu" placeholder="https://youtu.be/…  hoặc  https://…/bai-hat.mp3" aria-label="Link nhạc"><button class="b" id="madd">Thêm</button></div>
   <div class="card" id="tl"></div>
 </section>
