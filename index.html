@@ -1,33 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Rewymine - Rewyne </title>
-    <link rel="stylesheet" href="styles.css"/>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0b0f">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rewymine">
+<title>Rewymine</title>
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
 </head>
-<body class="home blog">
-    <header class="header">
-        <div class="wide-container">
-            <div class="title">
-                <h1><a href="/">Rewyne</a></h1>
-            </div>
-            <nav class="header-nav">
-                <div class="menu-header-nav-container">
-                    <ul id="menu-header-nav" class="menu">
-                        <li><a href="...">Image</a></li>
-                        <li><a href="...">Music</a></li>
-                        <li><a href="...">About</a></li>
-                        <li><a href="...">contact</a></li>
-                        <li><a href="https://www.youtube.com/channel/UCBb-4migJFS008A5knwWzUA">youtube</a></li>
-<!--                         <li><a href="...">archives</a></li> -->
-                    </ul>
-                </div>
-            </nav>
-            <div class="byline">
-                <h1><a href="adddat.html">Tools</a></h1>
-            </div>
-        </div>
-    </header> 
+<body>
+<nav aria-label="Điều hướng">
+  <div class="logo">REWY<i>MINE</i></div>
+  <button data-t="home">Trang chủ</button><button data-t="music">Nhạc</button><button data-t="movie">Phim</button><button data-t="game">Game</button><button data-t="news">Tin tức</button><button data-t="tools">Công cụ</button>
+</nav>
+<main>
+
+<section class="tab" id="t-home">
+  <h1>Rewymine</h1><p class="sub">Góc giải trí cá nhân · dữ liệu nằm trong máy bạn</p>
+  <div class="card"><b>Sao lưu dữ liệu</b><p class="mute" style="margin:4px 0 12px">Dữ liệu lưu riêng trên từng thiết bị. Xuất file để chuyển giữa Windows và iPhone, hoặc phòng khi trình duyệt xoá dữ liệu.</p>
+  <div class="bar"><button class="b" id="exp">Xuất file sao lưu</button><button class="b ghost" id="impb">Nhập file sao lưu</button><input type="file" id="imp" accept=".json" hidden></div></div>
+  <div class="card mute" id="stats"></div>
+</section>
+
+<section class="tab" id="t-music">
+  <h1>Nhạc</h1><p class="sub">Nghe qua trình phát YouTube · dán link video hoặc playlist, hoặc link .mp3 hợp pháp</p>
+  <div id="player"></div>
+  <div class="bar"><input id="mu" placeholder="https://youtu.be/…  hoặc  https://…/bai-hat.mp3" aria-label="Link nhạc"><button class="b" id="madd">Thêm</button></div>
+  <div class="card" id="tl"></div>
+</section>
+
+<section class="tab" id="t-movie">
+  <h1>Phim &amp; series</h1><p class="sub">Dữ liệu từ TMDB · xem trailer, lưu danh sách, mở nơi xem hợp pháp</p>
+  <div class="card" id="kbox"></div>
+  <div class="bar"><select id="mmode" aria-label="Danh mục"></select><input id="mq" placeholder="Tìm phim, series, anime…" aria-label="Tìm phim"><button class="b" id="msr">Tìm</button></div>
+  <div id="mdet"></div>
+  <div class="grid" id="mres"></div>
+  <h2>Danh sách của tôi</h2><div class="grid" id="mlist"></div>
+  <h2>Phim miễn phí hợp pháp</h2>
+  <p class="mute" style="margin-bottom:12px">Phim thuộc phạm vi công cộng trên Internet Archive, xem trọn vẹn ngay tại đây.</p>
+  <div class="bar"><button class="b ghost" id="iabtn">Tải danh sách</button></div>
+  <div id="iaplayer"></div><div class="card" id="ialist" hidden></div>
+  <small class="foot">Dữ liệu phim do TMDB cung cấp. Sản phẩm này dùng TMDB API nhưng không được TMDB chứng nhận hay xác nhận.</small>
+</section>
+
+<section class="tab" id="t-game">
+  <h1>Game</h1><p class="sub">Chơi ngay trong trình duyệt, hoặc tra cứu LoL và lên đội hình TFT</p>
+  <div class="chips" id="gchips"><button data-k="play" class="on">Chơi ngay</button><button data-k="lol">LoL</button><button data-k="tft">TFT</button></div>
+  <div class="pane on" id="g-play">
+    <div class="bar"><button class="b" id="sbtn">Chơi Rắn</button><span class="mute" id="sc" style="align-self:center"></span></div>
+    <canvas id="sn" width="360" height="360"></canvas><p class="mute">Vuốt trên màn hình, hoặc dùng phím mũi tên / WASD.</p>
+  </div>
+  <div class="pane" id="g-lol">
+    <div class="bar"><input id="lq" placeholder="Tìm tướng…" aria-label="Tìm tướng"><select id="lr" aria-label="Vai trò"><option value="">Mọi vai trò</option><option value="Fighter">Đấu sĩ</option><option value="Tank">Đỡ đòn</option><option value="Mage">Pháp sư</option><option value="Assassin">Sát thủ</option><option value="Marksman">Xạ thủ</option><option value="Support">Hỗ trợ</option></select></div>
+    <p class="mute" style="margin-bottom:12px">Bấm vào tướng để gắn ★ yêu thích (hiện lên đầu danh sách).</p>
+    <div class="grid" id="lgrid"></div><div class="bar" id="llinks" style="margin-top:16px"></div>
+  </div>
+  <div class="pane" id="g-tft">
+    <div class="card"><div class="bar"><input id="tn" placeholder="Tên đội hình (vd: Roll 4 cost)" aria-label="Tên đội hình"></div>
+    <div class="bar"><input id="tu" placeholder="Tướng, cách nhau dấu phẩy" aria-label="Danh sách tướng"></div>
+    <div class="bar"><input id="tnote" placeholder="Ghi chú: trang bị, vị trí, khi nào roll…" aria-label="Ghi chú"><button class="b" id="tadd">Lưu</button></div></div>
+    <div id="tfl"></div><div class="bar" id="tlinks"></div>
+  </div>
+</section>
+
+<section class="tab" id="t-news">
+  <h1>Tin tức</h1><p class="sub">Tiêu đề từ RSS công khai · bấm để đọc trên trang gốc</p>
+  <div class="chips" id="ncat"></div>
+  <div class="bar"><select id="ns" aria-label="Nguồn tin"></select><button class="b ghost" id="nrf">Tải lại</button></div>
+  <details class="card"><summary>Thêm nguồn RSS của riêng bạn</summary>
+    <div class="bar" style="margin-top:12px"><input id="nfn" placeholder="Tên nguồn"><input id="nfu" placeholder="https://…/rss.xml"><button class="b" id="nfa">Thêm</button></div></details>
+  <div class="card" id="nl"></div>
+</section>
+
+<section class="tab" id="t-tools">
+  <h1>Công cụ</h1><p class="sub">Tiện ích cá nhân · tất cả lưu trong máy</p>
+  <div class="grid2">
+    <div class="card"><b>Lối tắt</b><div class="bar" style="margin:10px 0"><input id="lkn" placeholder="Tên"><input id="lku" placeholder="https://…"><button class="b" id="lka">+</button></div><div id="lkl"></div></div>
+    <div class="card"><b>Việc cần làm</b><div class="bar" style="margin:10px 0"><input id="tdi" placeholder="Việc mới…"><button class="b" id="tda">+</button></div><div id="tdl"></div></div>
+    <div class="card"><b>Ghi chú nhanh</b><textarea id="note" rows="7" placeholder="Gõ gì cũng được, tự động lưu…"></textarea></div>
+    <div class="card"><b>Pomodoro</b><p class="mute" id="pmd">Tập trung</p><div id="pt">25:00</div><div class="bar"><button class="b" id="pgo">Bắt đầu</button><button class="b ghost" id="prs">Đặt lại</button></div><small class="mute">25 phút tập trung, 5 phút nghỉ. Giữ tab mở để đồng hồ chạy đúng.</small></div>
+    <div class="card"><b>Tạo mật khẩu</b><div class="bar" style="margin:10px 0"><input id="pl" type="number" min="8" max="64" value="16" aria-label="Độ dài" style="max-width:90px"><button class="b" id="pw">Tạo</button><button class="b ghost" id="pc">Sao chép</button></div><input id="po" readonly aria-label="Mật khẩu"></div>
+  </div>
+</section>
+
+</main>
 </body>
 </html>

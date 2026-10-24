@@ -1,0 +1,57 @@
+/* ===== MÀU SẮC: đổi ở đây là đổi cả trang ===== */
+:root{--bg:#0b0b0f;--panel:#14141a;--line:#24242e;--text:#ececf1;--mute:#8d8d9c;--acc:#8b7cff;--r:14px}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;min-height:100vh}
+a{color:var(--acc)}h2{font-size:1.1rem;margin:28px 0 12px}
+
+/* Điều hướng */
+nav{display:flex;flex-direction:column;gap:4px;width:210px;padding:24px 14px;border-right:1px solid var(--line);position:sticky;top:0;height:100vh}
+.logo{font-weight:700;letter-spacing:.06em;padding:0 12px 20px;font-size:1.15rem}.logo i{color:var(--acc);font-style:normal}
+nav button{background:none;border:0;color:var(--mute);text-align:left;padding:10px 12px;border-radius:10px;font:inherit;cursor:pointer}
+nav button:hover,nav button:focus-visible{color:var(--text);background:var(--panel)}
+nav button.on{color:var(--text);background:var(--panel);box-shadow:inset 2px 0 var(--acc)}
+main{flex:1;min-width:0;max-width:960px;padding:calc(32px + env(safe-area-inset-top)) clamp(16px,4vw,48px) 48px}
+.tab,.pane{display:none}.tab.on,.pane.on{display:block}
+h1{font-size:1.6rem;font-weight:650;margin-bottom:4px}.sub,.mute{color:var(--mute)}.sub{margin-bottom:24px}
+
+/* Thành phần chung */
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}.grid2 .card{margin:0}
+input,select,textarea{background:#0f0f14;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--acc);outline-offset:1px}
+select{width:auto;max-width:100%}
+.b{background:var(--acc);border:1px solid var(--acc);color:#0b0b0f;font:inherit;font-weight:600;border-radius:10px;padding:10px 14px;cursor:pointer;white-space:nowrap}
+.b.ghost{background:none;color:var(--text);border-color:var(--line)}.lk{display:inline-block;text-decoration:none}
+.bar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap}.bar input{flex:1;min-width:140px;width:auto}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line)}.row:last-child{border:0}
+.lnk,.x{background:none;border:0;color:var(--text);font:inherit;cursor:pointer;padding:10px 4px;text-align:left}.x{color:var(--mute)}
+.chips{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;padding-bottom:4px}
+.chips button{background:var(--panel);border:1px solid var(--line);color:var(--mute);border-radius:99px;padding:6px 14px;font:inherit;font-size:.9rem;cursor:pointer;white-space:nowrap}
+.chips button.on{color:var(--text);border-color:var(--acc)}
+.tag{display:inline-block;background:#0f0f14;border:1px solid var(--line);border-radius:8px;padding:2px 8px;margin:6px 6px 0 0;font-size:.8rem}
+small.foot{display:block;color:var(--mute);margin-top:24px;font-size:.78rem}
+iframe.v,#player iframe{width:100%;aspect-ratio:16/9;border:0;border-radius:var(--r);margin-bottom:12px}#player audio{width:100%;margin-bottom:12px}
+
+/* Phim */
+.poster{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;font-size:.85rem}
+.pimg{display:block;width:100%;padding:0;border:0;background:none;cursor:pointer}
+.poster img{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;background:#0f0f14}.poster div{padding:8px}
+.poster select{width:100%;padding:6px;margin:6px 0;font-size:.8rem}
+
+/* Game */
+canvas{width:min(100%,360px);aspect-ratio:1;background:#0f0f14;border:1px solid var(--line);border-radius:var(--r);touch-action:none;display:block;margin:12px 0}
+.champ{background:var(--panel);border:1px solid var(--line);border-radius:12px;color:var(--text);padding:8px;font:inherit;font-size:.8rem;cursor:pointer;text-align:center}
+.champ img{width:100%;border-radius:8px;display:block;margin-bottom:4px}
+
+/* Tin tức, công cụ */
+.news{display:flex;flex-direction:column;gap:2px;padding:12px 0;border-bottom:1px solid var(--line);color:var(--text);text-decoration:none}
+.news:hover span{color:var(--acc)}.news small{color:var(--mute)}
+summary{cursor:pointer;color:var(--mute)}
+#pt{font-size:3rem;font-weight:300;font-variant-numeric:tabular-nums;margin:4px 0 12px}
+label.td{display:flex;gap:8px;align-items:center;padding:6px 0}label.td input{width:auto}.done{text-decoration:line-through;color:var(--mute)}
+
+/* iPhone / màn hình nhỏ: thanh điều hướng xuống dưới */
+@media(max-width:720px){body{display:block}
+nav{position:fixed;inset:auto 0 0 0;width:auto;height:auto;flex-direction:row;justify-content:space-around;border:0;border-top:1px solid var(--line);background:rgba(11,11,15,.92);backdrop-filter:blur(12px);padding:6px 4px calc(6px + env(safe-area-inset-bottom));z-index:9}
+.logo{display:none}nav button{text-align:center;padding:8px 6px;font-size:.72rem}nav button.on{box-shadow:none;color:var(--acc)}main{padding-bottom:100px}}
