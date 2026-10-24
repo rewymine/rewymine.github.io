@@ -21,7 +21,7 @@ const MODES = { // danh mục phim: [đường dẫn TMDB, tham số thêm]
 };
 const GAME_LINKS = {
   lol: [['OP.GG','https://www.op.gg/'],['Lolalytics','https://lolalytics.com/'],['Trang chủ LoL','https://www.leagueoflegends.com/vi-vn/']],
-  tft: [['MetaTFT','https://www.metatft.com/'],['Tactics.tools','https://tactics.tools/'],['Trang chủ TFT','https://teamfighttactics.leagueoflegends.com/vi-vn/']]
+  tft: [['DataTFT','https://www.datatft.com/'],['TFTAcademy','https://tftacademy.com/tierlist/comps'],['Trang chủ TFT','https://teamfighttactics.leagueoflegends.com/vi-vn/']]
 };
 
 /* ===== 2. TIỆN ÍCH, ĐIỀU HƯỚNG, SAO LƯU ===== */
