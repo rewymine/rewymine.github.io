@@ -25,27 +25,48 @@
 </section>
 
 <section class="tab" id="t-music">
-  <h1>Nhạc</h1><p class="sub">Nghe qua trình phát YouTube, tự phát bài kế tiếp · ⬇ tải file .mp3 · ↗ mở bài trên YouTube</p>
-  <div id="pbox"><div id="ytp"></div><audio id="au" controls hidden></audio></div>
-  <div class="bar" id="pctl" hidden><button class="b ghost" id="mprev">⏮ Trước</button><button class="b ghost" id="mnext">Sau ⏭</button><label class="td"><input type="checkbox" id="mloop"> Lặp danh sách</label><span class="mute" id="pnow" style="align-self:center"></span></div>
-  <div class="bar"><input id="mu" placeholder="https://youtu.be/…  hoặc  https://…/bai-hat.mp3" aria-label="Link nhạc"><button class="b" id="madd">Thêm</button></div>
-  <div class="card" id="tl"></div>
-</section>
+  <h1>Nhạc</h1>
+  <p class="sub">Nghe qua trình phát YouTube, tự phát bài kế tiếp · lyrics tự động · ⬇ tải MP3 · ↗ mở trên YouTube</p>
 
-<section class="tab" id="t-movie">
-  <h1>Phim &amp; series</h1><p class="sub">Dữ liệu từ TMDB · xem trailer, lưu danh sách, mở nơi xem hợp pháp</p>
-  <div class="card" id="kbox"></div>
-  <div class="bar"><select id="mmode" aria-label="Danh mục"></select><input id="mq" placeholder="Tìm phim, series, anime…" aria-label="Tìm phim"><button class="b" id="msr">Tìm</button></div>
-  <div id="mdet"></div>
-  <div class="grid" id="mres"></div>
-  <h2>Danh sách của tôi</h2><div class="grid" id="mlist"></div>
-  <h2>Phim miễn phí hợp pháp</h2>
-  <p class="mute" style="margin-bottom:12px">Phim thuộc phạm vi công cộng trên Internet Archive, xem trọn vẹn ngay tại đây.</p>
-  <div class="bar"><button class="b ghost" id="iabtn">Tải danh sách</button></div>
-  <div id="iaplayer"></div><div class="card" id="ialist" hidden></div>
-  <small class="foot">Dữ liệu phim do TMDB cung cấp. Sản phẩm này dùng TMDB API nhưng không được TMDB chứng nhận hay xác nhận.</small>
-</section>
+  <div class="music-layout">
+    <div class="music-main">
+      <div id="pbox"><div id="ytp"></div><audio id="au" controls hidden></audio></div>
+      <div class="bar" id="pctl" hidden>
+        <button class="b ghost" id="mprev">⏮ Trước</button>
+        <button class="b ghost" id="mnext">Sau ⏭</button>
+        <label class="td"><input type="checkbox" id="mloop"> Lặp danh sách</label>
+        <span class="mute" id="pnow" style="align-self:center"></span>
+      </div>
+      <div class="bar">
+        <input id="mu" placeholder="https://youtu.be/…  hoặc  https://…/bai-hat.mp3" aria-label="Link nhạc">
+        <button class="b" id="madd">Thêm</button>
+      </div>
+      <div class="card" id="tl"></div>
+    </div>
 
+    <div class="music-side">
+      <div class="card lyrics-card">
+        <div class="lyrics-header">
+          <b>Lyrics</b>
+          <span class="mute" id="lyrics-status">Chưa có bài</span>
+        </div>
+        <div id="lyrics-box" class="lyrics-body">
+          <p class="mute">Phát một bài để hiện lời bài hát.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <b>Tải MP3 từ YouTube</b>
+        <p class="mute" style="margin:6px 0 12px;font-size:.9rem">Dán link YouTube → mở trang chuyển đổi (sử dụng trang bên ngoài).</p>
+        <div class="bar">
+          <input id="ytdl-url" placeholder="https://youtu.be/… hoặc https://www.youtube.com/watch?v=…" aria-label="Link YouTube để tải">
+          <button class="b" id="ytdl-btn">Tải MP3</button>
+        </div>
+        <p class="mute" style="font-size:.8rem;margin-top:8px">Lưu ý: Chỉ dùng cho nội dung bạn có quyền. Việc tải có thể vi phạm điều khoản YouTube.</p>
+      </div>
+    </div>
+  </div>
+</section>
 <section class="tab" id="t-game">
   <h1>Game</h1><p class="sub">Chơi ngay trong trình duyệt, hoặc tra cứu LoL và lên đội hình TFT</p>
   <div class="chips" id="gchips"><button data-k="play" class="on">Chơi ngay</button><button data-k="lol">LoL</button><button data-k="tft">TFT</button></div>
